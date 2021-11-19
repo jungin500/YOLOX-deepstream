@@ -14,19 +14,14 @@
 # limitations under the License.
 #
 
-#CUDA_VER?=
-CUDA_VER=10.2
-ifeq ($(CUDA_VER),)
-  $(error "CUDA_VER is not set")
-endif
 CC:= g++
-NVCC:=/usr/local/cuda-$(CUDA_VER)/bin/nvcc
+NVCC:=/usr/local/cuda/bin/nvcc
 
 CFLAGS:= -Wall -std=c++11 -shared -fPIC -Wno-error=deprecated-declarations
-CFLAGS+= -I../../includes -I/usr/local/cuda-$(CUDA_VER)/include -I/home/nvidia/data/zhangbo/library/opencv-4.5.1/include/opencv4 -I/usr/lib/gcc/x86_64-linux-gnu/7/include/ 
+CFLAGS+= -I../../includes -I/usr/local/cuda/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include/  `pkg-config --cflags opencv`
 CXXFLAGS:= -fopenmp
 
-LIBS:= -lnvinfer_plugin -lnvinfer -lnvparsers -L/usr/local/cuda-$(CUDA_VER)/lib64 -lcudart -lcublas -lstdc++fs -L/home/nvidia/data/zhangbo/library/opencv-4.5.1/lib -lopencv_core
+LIBS:= -lnvinfer_plugin -lnvinfer -lnvparsers -L/usr/local/cuda/lib64 -lcudart -lcublas -lstdc++fs `pkg-config --libs opencv`
 LFLAGS:= -shared -Wl,--start-group $(LIBS) -Wl,--end-group -fopenmp
 
 INCS:= $(wildcard *.h)
