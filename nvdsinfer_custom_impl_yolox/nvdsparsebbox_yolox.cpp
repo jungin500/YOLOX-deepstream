@@ -233,12 +233,6 @@ static void decode_outputs(float* prob, std::vector<Object>& objects, float scal
             float x1 = (objects[i].rect.x + objects[i].rect.width);
             float y1 = (objects[i].rect.y + objects[i].rect.height);
 
-            // clip
-            x0 = std::max(std::min(x0, (float)(img_w - 1)), 0.f);
-            y0 = std::max(std::min(y0, (float)(img_h - 1)), 0.f);
-            x1 = std::max(std::min(x1, (float)(img_w - 1)), 0.f);
-            y1 = std::max(std::min(y1, (float)(img_h - 1)), 0.f);
-
             objects[i].rect.x = x0;
             objects[i].rect.y = y0;
             objects[i].rect.width = x1 - x0;
